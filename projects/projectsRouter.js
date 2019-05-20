@@ -48,6 +48,17 @@ router.delete('/:id', validateID, async(req,res) => {
     }
 })
 
+// Edit a project
+
+router.put('/:id', validateID, async(req, res) => {
+    try {
+        const updatedProject = await db.update(req.params.id, req.body)
+        res.json({updatedProject})
+    } catch(err){
+        res.status(500).json(err.message);
+    }
+})
+
 // Middleware
 
 async function validateID(req, res, next) {
