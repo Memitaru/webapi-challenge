@@ -19,9 +19,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get project by id
+
 router.get('/:id', validateID, async (req, res) => {
    const project = await db.get(req.params.id);
    res.json(project)
+})
+
+// Add a project
+
+router.post('/', async (req, res) => {
+    try {
+        const newProject = await db.insert(req.body);
+        res.json(newProject);
+    } catch{
+        res.status(500).json({message: "Internal server error. Make sure you included a name and description."})
+    }
 })
 
 // Middleware
