@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
       res.status(400).json({ message: "No projects found." });
     }
   } catch (err) {
-    res.status(500).json({ message: "internal server errors" });
+    res.status(500).json(err);
   }
 });
 
@@ -32,8 +32,19 @@ router.post('/', async (req, res) => {
     try {
         const newProject = await db.insert(req.body);
         res.json(newProject);
-    } catch{
+    } catch {
         res.status(500).json({message: "Internal server error. Make sure you included a name and description."})
+    }
+})
+
+// Delete a project
+
+router.delete('/:id', validateID, async(req,res) => {
+    try {
+        deletedPost = await db.remove(req.params.id);
+        res.json(deletedPost)
+    } catch(err){
+        res.status(500).json(err)
     }
 })
 
