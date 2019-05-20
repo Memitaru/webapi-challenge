@@ -50,6 +50,23 @@ router.put('/:id', validateID, async (req, res) => {
     }
 })
 
+// Add an action
+
+router.post('/', async (req, res) => {
+    try {
+        const newAction = db.insert(req.body)
+        if (!req.body.project_id) {
+            res.status(500).json({message: "You must include a project id number."})
+        } else if (req.body) {
+            res.json(newAction)
+        } else {
+            res.status(500).json({error: "Make sure you've included all necessary information."})
+        } 
+    } catch(err){
+        res.status(500).json(err.message)
+    }
+})
+
 // Middleware
 
 async function validateID(req, res, next) {
