@@ -44,7 +44,7 @@ router.delete('/:id', validateID, async(req,res) => {
         deletedPost = await db.remove(req.params.id);
         res.json(deletedPost)
     } catch(err){
-        res.status(500).json(err)
+        res.status(500).json(err.message)
     }
 })
 
@@ -56,6 +56,17 @@ router.put('/:id', validateID, async(req, res) => {
         res.json({updatedProject})
     } catch(err){
         res.status(500).json(err.message);
+    }
+})
+
+// Get actions for project
+
+router.get('/:id/actions', validateID, async (req, res) =>{
+    try{
+        const projectActions = await db.getProjectActions(req.params.id);
+        res.json(projectActions)
+    } catch(err){
+        res.status(500).json(err.message)
     }
 })
 
