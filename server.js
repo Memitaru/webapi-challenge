@@ -5,6 +5,7 @@ const morgan = require('morgan');
 // Routers
 
 const projectsRouter = require('./projects/projectsRouter');
+const actionsRouter = require('./actions/actionsRouter');
 
 const server = express();
 
@@ -17,6 +18,7 @@ server.use(helmet());
 server.use(morgan('dev'));
 
 server.use('/api/projects', projectsRouter);
+server.use('/api/actions', actionsRouter);
 
 server.get('/', (req, res) => {
     res.send('First backend sprint challenge!')
